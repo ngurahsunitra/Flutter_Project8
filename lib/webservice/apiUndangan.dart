@@ -1,9 +1,12 @@
 import 'dart:convert';
-import 'package:undangan/model/Undangan.dart';
 import 'package:http/http.dart' as http;
+import 'package:undangan_app/model/Undangan.dart';
+
+
 
 class ApiUndangan {
-  final url = "https://debly.cc/api/getListUndangan.php";
+  final url = "http://192.168.43.119:8080/apiundangan/getListUndangan.php";
+
   // Get all undangan
   Future<List<Undangan>?> getUndanganAll() async {
     final response = await http.get(Uri.parse(url));
@@ -40,7 +43,7 @@ class ApiUndangan {
   // Cek kehadiran undangan
   Future<Undangan?> cekUndangan(String email) async {
     final response = await http
-        .get(Uri.parse("https://debly.cc/api/cekUndangan.php?email=$email"));
+        .get(Uri.parse("http://192.168.43.119:8080/apiundangan/cekUndangan.php?email=$email"));
     if (response.statusCode == 200) {
       final result = json.decode(response.body);
       return Undangan.fromJson(result[0]);
@@ -52,8 +55,8 @@ class ApiUndangan {
 
   // Ubah status kehadiran
   Future<bool> updateKehadiran(Undangan undangan) async {
-    final response = await http
-        .get(Uri.parse("https://debly.cc/api/updateKehadiran.php?undangan_id=${undangan.id}"));
+    final response = await http.get(Uri.parse(
+        "http://192.168.43.119:8080/apiundangan/updateKehadiran.php?undangan_id=${undangan.undanganID}"));
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -63,8 +66,8 @@ class ApiUndangan {
 
   // Reset status kehadiran
   Future<bool> resetKehadiran() async {
-    final response = await http
-        .get(Uri.parse("https://debly.cc/api/resetKehadiran.php"));
+    final response = await http.get(Uri.parse(
+        "http://192.168.43.119:8080/apiundangan/resetKehadiran.php"));
     if (response.statusCode == 200) {
       return true;
     } else {

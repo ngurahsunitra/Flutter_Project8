@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:undangan_app/webservice/apiUndangan.dart';
 import 'model/Undangan.dart';
-import 'package:undangan/webservice/apiUndangan.dart';
+import 'webservice/apiUndangan.dart';
+
 
 class QRViewExample extends StatefulWidget {
   @override
@@ -62,7 +64,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                       margin: EdgeInsets.only(top: 100),
                       child: Text(
                         "Data Tidak Ditemukan",
-                        style: TextStyle(fontSize: 20, color: Colors.red),
+                        style: TextStyle(fontSize: 20, color: Colors.pink),
                       ));
                 } else {
                   return CircularProgressIndicator();
@@ -87,7 +89,10 @@ class _QRViewExampleState extends State<QRViewExample> {
                             result = null;
                           });
                         },
-                        child: Text("Coba Lagi"),
+                        child: Text("Coba Lagi",),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.pink,
+                        ),
                       )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -100,11 +105,15 @@ class _QRViewExampleState extends State<QRViewExample> {
                               await controller?.toggleFlash();
                               setState(() {});
                             },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.pink,
+                            ),
                             child: FutureBuilder(
                               future: controller?.getFlashStatus(),
                               builder: (context, snapshot) {
                                 return Text('Flash: ${snapshot.data}');
                               },
+
                             )),
                       ),
                       Container(
@@ -114,6 +123,9 @@ class _QRViewExampleState extends State<QRViewExample> {
                               await controller?.flipCamera();
                               setState(() {});
                             },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.pink,
+                            ),
                             child: FutureBuilder(
                               future: controller?.getCameraInfo(),
                               builder: (context, snapshot) {
@@ -138,6 +150,9 @@ class _QRViewExampleState extends State<QRViewExample> {
                           onPressed: () async {
                             await controller?.pauseCamera();
                           },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pink,
+                          ),
                           child: Text('pause', style: TextStyle(fontSize: 20)),
                         ),
                       ),
@@ -147,6 +162,9 @@ class _QRViewExampleState extends State<QRViewExample> {
                           onPressed: () async {
                             await controller?.resumeCamera();
                           },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pink,
+                          ),
                           child: Text('resume', style: TextStyle(fontSize: 20)),
                         ),
                       )
@@ -212,10 +230,10 @@ class _QRViewExampleState extends State<QRViewExample> {
           ),
           SizedBox(height: 20),
           Container(
-            child: Image.network("https://debly.cc/api/assets/${undangan.foto}"),
+            child: Image.network("http://192.168.8.115/apiundangan/assets/${undangan.foto}"),
           ),
           SizedBox(height: 20),
-          Text("Terimakasih Sudah Hadir",style: TextStyle(
+          Text("Anda Telah Hadir, Terima Kasih ^^",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
             color: Colors.white,

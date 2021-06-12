@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:undangan/model/Undangan.dart';
-import 'package:undangan/webservice/apiUndangan.dart';
+import 'package:undangan_app/webservice/apiUndangan.dart';
 import 'home.dart';
+import 'model/Undangan.dart';
 class UndanganList extends StatefulWidget {
   const UndanganList({Key? key}) : super(key: key);
 
@@ -48,8 +48,7 @@ class _UndanganListState extends State<UndanganList> {
   Widget _buildListView(List<Undangan> undangan) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyan[900],
-        title: Text('Daftar Undangan'),
+        title: Text('E-Invitation'),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
@@ -60,6 +59,7 @@ class _UndanganListState extends State<UndanganList> {
             );
           },
         ),
+        backgroundColor: Colors.cyan[900],
       ),
       body: Container(
         child: Column(
@@ -78,47 +78,31 @@ class _UndanganListState extends State<UndanganList> {
                         subtitle: Text(undangan[index].email),
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                              "https://debly.cc/api/${undangan[index].foto}"),
+                              "http://192.168.43.119:8080/apiundangan/assets/${undangan[index].foto}"),
                         ),
                         trailing: Icon(
                           Icons.star,
                           color: undangan[index].statusDatang == '1'
-                              ? Colors.blue
+                              ? Colors.cyan[900]
                               : Colors.black12,
                         ),
                       ),
                     );
                   }),
             ),
-              FlatButton(
+            Expanded(
+              flex: 1,
+              child: ElevatedButton(
+                child: Text("Reset Kehadiran",style: TextStyle(fontSize: 18),),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.cyan[900],
+                ),
                 onPressed: () {
                   apiUndangan!.resetKehadiran();
                   setState(() {});
                 },
-                child: Container(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0, top: 20.0),
-                    child: Center(
-                      child: Text(
-                        "Reset Kehadiran",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.cyan[900],
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                ),
               ),
-            SizedBox(
-              height: 30.0,
-            ),
+            )
           ],
         ),
       ),

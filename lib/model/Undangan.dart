@@ -5,14 +5,14 @@ List<Undangan> undanganFromJson(String str) =>
     List<Undangan>.from(json.decode(str).map((x) => Undangan.fromJson(x)));
 
 class Undangan {
-  String id;
+  String undanganID;
   String email;
   String nama;
   String statusDatang;
   String foto;
 
   Undangan({
-    required this.id,
+    required this.undanganID,
     required this.email,
     required this.nama,
     required this.statusDatang,
@@ -20,14 +20,14 @@ class Undangan {
   });
 
   factory Undangan.fromJson(Map<String, dynamic> json) => Undangan(
-    id: json["id"],
+    undanganID: json["id_undangan"],
     email: json["email"],
     nama: json["nama"],
     statusDatang: json["status_datang"],
     foto: json["foto"],
   );
   Map<String, dynamic> toJson() =>{
-    "id" : id,
+    "id_undangan" : undanganID,
     "email" : email,
     "nama" : nama,
     "status_datang" : statusDatang,
